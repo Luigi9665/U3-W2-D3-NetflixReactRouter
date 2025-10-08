@@ -1,10 +1,12 @@
 import { Component } from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
-import Galleria from "./Components/Galleria";
+
 import MyFooter from "./Components/MyFooter";
 import MyNavbar from "./Components/MyNavbar";
-import Welcome from "./Components/Welcome";
-import Profile from "./Profile";
+import TvShows from "./Pages/TvShows";
+import Home from "./Pages/Home";
+import Details from "./Pages/Details";
 
 // HO UTILIZZATO SWIPER COME CAROSELLO QUINDI IMPORTARSI I FILE npm i swiper
 // utilizzare i bottoni in alto per mutare la pagina
@@ -17,29 +19,19 @@ class App extends Component {
   render() {
     return (
       <>
-        <div style={{ position: "fixed", zIndex: "1000", right: "35%" }} className="d-flex gap-2">
-          <button className="btn bg-dark text-white-50 rounded-3" onClick={() => this.setState({ page: "home" })}>
-            Home
-          </button>
-          <button className="btn bg-dark text-white-50 rounded-3" onClick={() => this.setState({ page: "account" })}>
-            Account
-          </button>
-          <button className="btn bg-dark text-white-50 rounded-3" onClick={() => this.setState({ page: "setting" })}>
-            Setting
-          </button>
-        </div>
+        <BrowserRouter>
+          <div id="app">
+            <MyNavbar />
 
-        <MyNavbar />
-        {this.state.page === "home" ? (
-          <>
-            <Welcome />
-            <Galleria />
-          </>
-        ) : null}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/tvshows" element={<TvShows />} />
+              <Route path="/details/:id" element={<Details />} />
+            </Routes>
 
-        {this.state.page === "account" ? <Profile title="Edit Profile" nameProfile="Strive Student" /> : null}
-
-        <MyFooter />
+            <MyFooter />
+          </div>
+        </BrowserRouter>
       </>
     );
   }

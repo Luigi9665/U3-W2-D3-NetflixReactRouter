@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Search, Bell, PersonCircle } from "react-bootstrap-icons";
 
 import logo from "../assets/logo.png";
+import { NavLink } from "react-router";
 
 const MyNavbar = () => {
   return (
@@ -16,12 +17,12 @@ const MyNavbar = () => {
         <Navbar.Toggle className="bg-white" aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="fs-6 me-auto">
-            <Nav.Link href="#" className="nav-link active fw-bold text-white">
+            <NavLink to="/" className={({ isActive }) => `nav-link fw-bold  ${isActive ? "text-white" : "text-white-50"}`}>
               Home
-            </Nav.Link>
-            <Nav.Link href="#" className="nav-link fw-bold text-white-50">
-              Tv Show
-            </Nav.Link>
+            </NavLink>
+            <NavLink to="/tvshows" className={({ isActive }) => `nav-link fw-bold  ${isActive ? "text-white" : "text-white-50"}`}>
+              Tv Shows
+            </NavLink>
             <Nav.Link href="#" className="nav-link fw-bold text-white-50">
               Movies
             </Nav.Link>

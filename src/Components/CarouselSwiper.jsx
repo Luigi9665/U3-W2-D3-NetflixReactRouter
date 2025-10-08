@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Alert, Spinner } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { Link } from "react-router";
 
 class CarouselSwiper extends Component {
   state = {
@@ -75,9 +76,11 @@ class CarouselSwiper extends Component {
         >
           {this.state.movies.map((movie, index) => (
             <SwiperSlide key={movie.imdbID + "-" + index}>
-              <div className="movieSlider">
-                <img src={movie.Poster} alt={movie.Title} />
-              </div>
+              <Link to={`/details/${movie.imdbID}`}>
+                <div className="movieSlider">
+                  <img src={movie.Poster} alt={movie.Title} />
+                </div>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

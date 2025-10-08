@@ -64,7 +64,10 @@ footer {
 }
 
 .movieSlider:hover {
-  transform: scale(1.1);
+  transform: scale(1.04);
+}
+.movieSlider:active {
+  transform: scale(1);
 }
 
 .movieSlider {
@@ -106,4 +109,8 @@ footer {
 
 .swiper-button-next {
   right: -45px !important;
+}
+
+.toSelectlink:hover {
+  color: white;
 }
