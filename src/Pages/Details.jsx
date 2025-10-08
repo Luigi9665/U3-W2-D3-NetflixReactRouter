@@ -1,20 +1,30 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router";
+import CommentList from "../Components/CommentlList";
 
 const Details = () => {
   const { id } = useParams();
   console.log(id);
 
   const [film, setFilm] = useState(null);
+  const [comments, setComments] = useState([]);
 
   const getFetch = async () => {
     try {
       const response = await fetch("http://www.omdbapi.com/?apikey=ec73c4fc&i=" + id);
+      const responseComment = await fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGNkMDhmOTZmMzAyMjAwMTUxMDgwYjkiLCJpYXQiOjE3NTk0MDUxMDcsImV4cCI6MTc2MDYxNDcwN30.OyoZlzxZ-uKyGVDgy0PoCEWdIKhNuNuW4zqA3T-JLyA",
+        },
+      });
 
-      if (response.ok) {
+      if (response.ok && responseComment.ok) {
         const dataObj = await response.json();
+        const dataComment = await responseComment.json();
         setFilm(dataObj);
+        setComments(dataComment);
       } else if (response.status === 401 || response.status === 403) {
         throw new Error("Autorizzazione fallita, controlla la tua API key.");
       } else if (response.status === 404) {
@@ -62,7 +72,6 @@ const Details = () => {
 
                 <p className="">{film.Plot}</p>
 
-                {/* Additional Info */}
                 <div className="bg-info-subtle">
                   <p>
                     <span className="fw-semibold text-danger">Director:</span> {film.Director}
@@ -90,6 +99,12 @@ const Details = () => {
                   </p>
                 </div>
               </div>
+            </div>
+          </Col>
+          <Col xl={3}>
+            <div className="mt-5">
+              <h3 className="display-5 text-danger">Commenti degli utenti:</h3>
+              <CommentList comments={comments} />
             </div>
           </Col>
         </Row>
